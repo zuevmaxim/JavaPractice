@@ -87,7 +87,7 @@ public final class FirstPartTasks {
     // Произведение всех чисел потока по модулю 'modulo'
     // (все числа от 0 до 10000)
     public static int moduloProduction(IntStream stream, int modulo) {
-        throw new UnsupportedOperationException();
+        return stream.reduce(1, (a, b) -> (a * b) % modulo);
     }
 
     // Вернуть строку, состояющую из конкатенаций переданного массива, и окруженную строками "<", ">"
