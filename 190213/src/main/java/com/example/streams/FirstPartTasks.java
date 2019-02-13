@@ -95,6 +95,8 @@ public final class FirstPartTasks {
 
     // Вернуть поток из объектов класса 'clazz'
     public static <R> Stream<R> filterIsInstance(Stream<?> s, Class<R> clazz) {
-        throw new UnsupportedOperationException();
+        return s
+                .filter(clazz::isInstance)
+                .map(t -> (R) t);
     }
 }
