@@ -3,6 +3,7 @@ package com.example.streams;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -33,7 +34,7 @@ public final class FirstPartTasks {
 
     // Сгруппировать альбомы по артистам
     public static Map<Artist, List<Album>> groupByArtist(Stream<Album> albums) {
-        throw new UnsupportedOperationException();
+        return albums.collect(Collectors.groupingBy(Album::getArtist));
     }
 
     // Сгруппировать альбомы по артистам (в качестве значения вместо объекта 'Artist' использовать его имя)
