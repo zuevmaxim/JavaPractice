@@ -46,12 +46,12 @@ public final class FirstPartTasks {
 
     // Сгруппировать альбомы по артистам (в качестве значения вместо объекта 'Artist' использовать его имя)
     public static Map<Artist, List<String>> groupByArtistMapName(Stream<Album> albums) {
-        throw new UnsupportedOperationException();
+        return null; //albums.collect(Collectors.groupingBy(Album::getArtist, Collectors.mapping(Artist::getName, Collectors.toList())));
     }
 
     // Число повторяющихся альбомов в потоке
     public static long countAlbumDuplicates(Stream<Album> albums) {
-        throw new UnsupportedOperationException();
+        return albums.collect(Collectors.groupingBy(Function.identity(), Collectors.counting())).entrySet().stream().filter( p -> p.getValue() > 1 ).count();
     }
 
     // Альбом, в котором максимум рейтинга минимален
