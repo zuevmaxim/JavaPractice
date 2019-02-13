@@ -1,5 +1,6 @@
 package com.example.streams;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -29,7 +30,13 @@ public final class FirstPartTasks {
 
     // Список альбомов, в которых есть хотя бы один трек с рейтингом более 95, отсортированный по названию
     public static List<Album> sortedFavorites(Stream<Album> s) {
-        throw new UnsupportedOperationException();
+        return s.filter(
+                album ->
+                        album
+                                .getTracks()
+                                .stream()
+                                .anyMatch(track -> (track.getRating() > 95)))
+                .sorted(Comparator.comparing(Album::getName)).collect(Collectors.toList());
     }
 
     // Сгруппировать альбомы по артистам
