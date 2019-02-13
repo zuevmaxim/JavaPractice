@@ -38,7 +38,7 @@ public final class FirstPartTasks {
     }
 
     // Сгруппировать альбомы по артистам (в качестве значения вместо объекта 'Artist' использовать его имя)
-    public static Map<Artist, List<String>> groupByArtistMapName(Stream<Album> albums) {
+    public static Map<Artist, List<String>> groupByArtgiistMapName(Stream<Album> albums) {
         return null; //albums.collect(Collectors.groupingBy(Album::getArtist, Collectors.mapping(Artist::getName, Collectors.toList())));
     }
 
