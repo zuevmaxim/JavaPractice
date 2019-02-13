@@ -25,23 +25,24 @@
             </plugin>
 
             <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.3</version>
+                <groupId>se.eris</groupId>
+                <artifactId>notnull-instrumenter-maven-plugin</artifactId>
+                <version>0.6.9-RC2</version>
                 <executions>
                     <execution>
+                        <id>instrument</id>
                         <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
+                            <goal>instrument</goal>
+                            <goal>tests-instrument</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <notNull>
+                        <param>org.jetbrains.annotations.NotNull</param>
+                        <param>javax.validation.constraints.NotNull</param>
+                    </notNull>
+                </configuration>
             </plugin>
         </plugins>
     </build>
