@@ -13,12 +13,12 @@ public final class FirstPartTasks {
 
     // Список названий альбомов
     public static List<String> allNames(Stream<Album> albums) {
-        throw new UnsupportedOperationException();
+        return albums.map(Album::getName).collect(Collectors.toList());
     }
 
     // Список названий альбомов, отсортированный лексикографически по названию
     public static List<String> allNamesSorted(Stream<Album> albums) {
-        throw new UnsupportedOperationException();
+        return albums.map(Album::getName).sorted().collect(Collectors.toList());
     }
 
     // Список треков, отсортированный лексикографически по названию, включающий все треки альбомов из 'albums'
