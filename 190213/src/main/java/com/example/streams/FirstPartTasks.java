@@ -1,9 +1,6 @@
 package com.example.streams;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -46,7 +43,7 @@ public final class FirstPartTasks {
 
     // Сгруппировать альбомы по артистам (в качестве значения вместо объекта 'Artist' использовать его имя)
     public static Map<Artist, List<String>> groupByArtistMapName(Stream<Album> albums) {
-        return null; //albums.collect(Collectors.groupingBy(Album::getArtist, Collectors.mapping(Artist::getName, Collectors.toList())));
+        throw new UnsupportedOperationException();
     }
 
     // Число повторяющихся альбомов в потоке
@@ -93,7 +90,7 @@ public final class FirstPartTasks {
     // Вернуть строку, состояющую из конкатенаций переданного массива, и окруженную строками "<", ">"
     // см. тесты
     public static String joinTo(String... strings) {
-        throw new UnsupportedOperationException();
+        return Arrays.stream(strings).collect(Collectors.joining(", ", "<", ">"));
     }
 
     // Вернуть поток из объектов класса 'clazz'
