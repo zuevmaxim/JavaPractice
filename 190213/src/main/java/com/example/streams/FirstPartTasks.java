@@ -45,7 +45,7 @@ public final class FirstPartTasks {
     }
 
     // Сгруппировать альбомы по артистам (в качестве значения вместо объекта 'Artist' использовать его имя)
-    public static Map<Artist, List<String>> groupByArtgiistMapName(Stream<Album> albums) {
+    public static Map<Artist, List<String>> groupByArtistMapName(Stream<Album> albums) {
         return null; //albums.collect(Collectors.groupingBy(Album::getArtist, Collectors.mapping(Artist::getName, Collectors.toList())));
     }
 
@@ -62,7 +62,12 @@ public final class FirstPartTasks {
 
     // Список альбомов, отсортированный по убыванию среднего рейтинга его треков (0, если треков нет)
     public static List<Album> sortByAverageRating(Stream<Album> albums) {
-        throw new UnsupportedOperationException();
+        return albums
+                .sorted(
+                        (album1, album2) ->
+                                (int)(- (double)(album1.getTracks().stream().mapToInt(Track::getRating).sum() / album1.getTracks().size())
+                                        + (double)(album2.getTracks().stream().mapToInt(Track::getRating).sum() / album2.getTracks().size())))
+                .collect(Collectors.toList());
     }
 
     // Произведение всех чисел потока по модулю 'modulo'
