@@ -24,7 +24,7 @@ public final class FirstPartTasks {
 
     // Список треков, отсортированный лексикографически по названию, включающий все треки альбомов из 'albums'
     public static List<String> allTracksSorted(Stream<Album> albums) {
-        throw new UnsupportedOperationException();
+        return albums.flatMap(album -> album.getTracks().stream()).map(Track::getName).sorted().collect(Collectors.toList());
     }
 
     // Список альбомов, в которых есть хотя бы один трек с рейтингом более 95, отсортированный по названию
