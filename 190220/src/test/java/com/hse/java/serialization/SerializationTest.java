@@ -59,7 +59,7 @@ class SerializationTest {
             Serialization.serialize(product, os);
             try (var is = new ByteArrayInputStream(os.toByteArray())) {
                 var otherProduct = Serialization.deserialize(is, Product.class);
-                assertTrue(product.equals(otherProduct));
+                assertEquals(product, otherProduct);
             }
         }
     }

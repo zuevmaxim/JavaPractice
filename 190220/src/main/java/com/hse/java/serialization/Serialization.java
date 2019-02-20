@@ -6,17 +6,19 @@ import java.lang.reflect.InvocationTargetException;
 
 public class Serialization {
     public static void serialize(Object object, OutputStream out) throws IOException, IllegalAccessException {
-        var clazz = object.getClass();
-        Field[] fields = clazz.getDeclaredFields();
         try (var dataOut = new ObjectOutputStream(out)) {
-            for (var field : fields) {
-                field.setAccessible(true);
-                var value = field.get(object);
-                dataOut.writeObject(value);
-                System.out.println(value);
+            var clazz = object.getClass();
+            while (clazz != Object.class) {
+                Field[] fields = clazz.getDeclaredFields();
+                for (var field : fields) {
+                    field.setAccessible(true);
+                    var value = field.get(object);
+                    dataOut.writeObject(value);
+                    //System.out.println(value);
+                }
+                clazz = clazz.getSuperclass();
             }
         }
-
     }
 
     public static <T> T deserialize(InputStream in, Class<T> clazz) throws IOException, ClassNotFoundException, IllegalAccessException {
@@ -27,14 +29,18 @@ public class Serialization {
                 | IllegalAccessException | InvocationTargetException e) {
             assert false;
         }
-        Field[] fields = clazz.getDeclaredFields();
-        try (var dataIn = new ObjectInputStream(in)) {
-            for (var field: fields) {
-                field.setAccessible(true);
-                var value = dataIn.readObject();
-                System.out.println(value);
-                field.set(result, value);
+        Class<?> tmpClass = clazz;
+        while (tmpClass != Object.class) {
+            Field[] fields = tmpClass.getDeclaredFields();
+            try (var dataIn = new ObjectInputStream(in)) {
+                for (var field : fields) {
+                    field.setAccessible(true);
+                    var value = dataIn.readObject();
+                    //System.out.println(value);
+                    field.set(result, value);
+                }
             }
+            tmpClass = tmpClass.getSuperclass();
         }
         return result;
     }
