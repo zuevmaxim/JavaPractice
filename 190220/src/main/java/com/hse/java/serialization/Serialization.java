@@ -13,6 +13,7 @@ public class Serialization {
                 field.setAccessible(true);
                 var value = field.get(object);
                 dataOut.writeObject(value);
+                System.out.println(value);
             }
         }
 
@@ -31,9 +32,10 @@ public class Serialization {
             for (var field: fields) {
                 field.setAccessible(true);
                 var value = dataIn.readObject();
+                System.out.println(value);
                 field.set(result, value);
             }
         }
-        return null;
+        return result;
     }
 }
