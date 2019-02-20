@@ -14,7 +14,6 @@ public class Serialization {
                     field.setAccessible(true);
                     var value = field.get(object);
                     dataOut.writeObject(value);
-                    //System.out.println(value);
                 }
                 clazz = clazz.getSuperclass();
             }
@@ -30,17 +29,16 @@ public class Serialization {
             assert false;
         }
         Class<?> tmpClass = clazz;
-        while (tmpClass != Object.class) {
-            Field[] fields = tmpClass.getDeclaredFields();
-            try (var dataIn = new ObjectInputStream(in)) {
+        try (var dataIn = new ObjectInputStream(in)) {
+            while (tmpClass != Object.class) {
+                Field[] fields = tmpClass.getDeclaredFields();
                 for (var field : fields) {
                     field.setAccessible(true);
                     var value = dataIn.readObject();
-                    //System.out.println(value);
                     field.set(result, value);
                 }
+                tmpClass = tmpClass.getSuperclass();
             }
-            tmpClass = tmpClass.getSuperclass();
         }
         return result;
     }

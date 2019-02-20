@@ -1,6 +1,5 @@
 package com.hse.java.serialization;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -15,12 +14,12 @@ class SerializationTest {
         public String name;
         public boolean hasName;
         private static byte hasInfo = 1;
-        short weight;
+        private short weight;
         final int number = 10;
-        public long id;
-        private float fats;
-        double sugar;
-        char vitamin;
+        long id;
+        protected float fats;
+        protected double sugar;
+        protected char vitamin;
 
         public Product() { };
 
@@ -75,7 +74,7 @@ class SerializationTest {
     }
 
     @Test
-    void serialize() throws IOException, IllegalAccessException, ClassNotFoundException {
+    void simpleTest() throws IOException, IllegalAccessException, ClassNotFoundException {
         var product = new Product("Max", true, (short) 3, 454234, (float) 5.9, 5.88, 'a');
         try (var os = new ByteArrayOutputStream()) {
             Serialization.serialize(product, os);
@@ -87,6 +86,14 @@ class SerializationTest {
     }
 
     @Test
-    void deserialize() {
+    void testWithParents() throws IOException, IllegalAccessException, ClassNotFoundException {
+        var fruit = new Fruit("Max", true, (short) 3, 454234, (float) 5.9, 5.88, 'a', "Russia");
+        try (var os = new ByteArrayOutputStream()) {
+            Serialization.serialize(fruit, os);
+            try (var is = new ByteArrayInputStream(os.toByteArray())) {
+                Fruit otherFruit = Serialization.deserialize(is, Fruit.class);
+                assertEquals(fruit, otherFruit);
+            }
+        }
     }
 }
