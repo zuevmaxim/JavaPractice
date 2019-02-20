@@ -39,14 +39,36 @@ class SerializationTest {
             if (obj instanceof Product) {
                 var other = (Product) obj;
                 return  name.equals(other.name) &&
-                        hasName == ((Product) obj).hasName &&
-                        hasInfo == ((Product) obj).hasInfo &&
-                        weight == ((Product) obj).weight &&
-                        number == ((Product) obj).number &&
-                        id == ((Product) obj).id &&
-                        fats == ((Product) obj).fats &&
-                        sugar == ((Product) obj).sugar &&
-                        vitamin == ((Product) obj).vitamin;
+                        hasName == other.hasName &&
+                        hasInfo == other.hasInfo &&
+                        weight == other.weight &&
+                        number == other.number &&
+                        id == other.id &&
+                        fats == other.fats &&
+                        sugar == other.sugar &&
+                        vitamin == other.vitamin;
+            }
+            return false;
+        }
+    }
+
+    private static class Fruit extends Product {
+        private String country;
+
+        public Fruit () {
+            super();
+        }
+
+        public Fruit (String name, boolean hasName, short weight, long id, float fats, double sugar, char vitamin, String country) {
+            super(name, hasName, weight, id, fats, sugar, vitamin);
+            this.country = country;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof Product) {
+                var other = (Fruit) obj;
+                return super.equals(obj) && country.equals(other.country);
             }
             return false;
         }
