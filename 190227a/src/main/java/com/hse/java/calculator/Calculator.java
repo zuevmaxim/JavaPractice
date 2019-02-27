@@ -2,6 +2,8 @@ package com.hse.java.calculator;
 
 import java.util.Stack;
 
+import static java.lang.Integer.parseInt;
+
 public class Calculator {
     private final Stack<Integer> stack;
 
@@ -10,6 +12,28 @@ public class Calculator {
     }
 
     public int evaluate(String s) {
-        return 0;
+        s = s.replaceAll(" ", "");
+        String operators[] = s.split("[*/+-]");
+        if (s == "") {
+            return 0;
+        }
+        for (var op : operators) {
+            switch(op) {
+                case "+" :
+                    stack.push(stack.pop() + stack.pop());
+                    break;
+                case "-" :
+                    stack.push(stack.pop() + stack.pop());
+                    break;
+                case "*" :
+                    stack.push(stack.pop() + stack.pop());
+                    break;
+                case "/" :
+                    stack.push(stack.pop() + stack.pop());
+                    break;
+                default : stack.push(parseInt(op));
+            }
+        }
+        return stack.peek();
     }
 }
