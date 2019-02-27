@@ -37,7 +37,7 @@ public class Calculator {
                 default : stack.push(parseInt(op));
             }
         }
-        if (stack.size() > 1) {
+        if (stack.size() != 1) {
             throw new IllegalStateException("Wrong string!");
         }
         return stack.peek();

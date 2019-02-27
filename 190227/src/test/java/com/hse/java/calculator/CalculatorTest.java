@@ -33,6 +33,7 @@ class CalculatorTest {
         when(stack.push(3)).thenReturn(3);
         when(stack.pop()).thenReturn(1).thenReturn(2);
         when(stack.peek()).thenReturn(3);
+        when(stack.size()).thenReturn(1);
         calculator = new Calculator(stack);
         assertEquals(3, calculator.evaluate("1 2 +"));
         verify(stack).push(1);
@@ -52,6 +53,7 @@ class CalculatorTest {
 
         when(stack.pop()).thenReturn(1).thenReturn(2).thenReturn(3).thenReturn(3).thenReturn(9);
         when(stack.peek()).thenReturn(9);
+        when(stack.size()).thenReturn(1);
         calculator = new Calculator(stack);
         assertEquals(9, calculator.evaluate("1 2 + 3 *"));
         verify(stack).push(1);
@@ -73,10 +75,8 @@ class CalculatorTest {
         when(stack.pop()).thenReturn(1).thenReturn(2).thenReturn(3).thenReturn(3).thenReturn(9);
         when(stack.peek()).thenReturn(9);
 
-
         calculator = new Calculator(stack);
         assertThrows(IllegalStateException.class, () -> calculator.evaluate("1 2 3 +"));
-
     }
 
     @Test
