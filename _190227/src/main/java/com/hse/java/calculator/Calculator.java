@@ -1,5 +1,7 @@
 package com.hse.java.calculator;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Stack;
 
 import static java.lang.Integer.parseInt;
@@ -7,13 +9,13 @@ import static java.lang.Integer.parseInt;
 public class Calculator {
     private final Stack<Integer> stack;
 
-    public Calculator(Stack<Integer> stack) {
+    public Calculator(@NotNull Stack<Integer> stack) {
         this.stack = stack;
     }
 
-    public int evaluate(String s) {
-        String operators[] = s.split(" ");
-        if (s == "") {
+    public int evaluate(@NotNull String s) {
+        String[] operators = s.split(" ");
+        if (s.equals("")) {
             return 0;
         }
         for (var op : operators) {
@@ -34,6 +36,9 @@ public class Calculator {
                     break;
                 default : stack.push(parseInt(op));
             }
+        }
+        if (stack.size() > 1) {
+            throw new IllegalStateException("Wrong string!");
         }
         return stack.peek();
     }
