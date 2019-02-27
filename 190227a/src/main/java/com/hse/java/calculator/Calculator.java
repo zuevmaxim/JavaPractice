@@ -12,7 +12,11 @@ public class Calculator {
     }
 
     public int evaluate(String s) {
+        s = s.replaceAll(" ", "");
         String operators[] = s.split("[*/+-]");
+        if (s == "") {
+            return 0;
+        }
         for (var op : operators) {
             switch(op) {
                 case "+" :
