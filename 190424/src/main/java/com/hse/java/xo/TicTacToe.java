@@ -21,30 +21,45 @@ public class TicTacToe extends Application {
         launch(args);
     }
 
-    final int N = 3;
-    Button[][] buttons = new Button[N][N];
+    private final int N = 3;
+    private Button[][] buttons = new Button[N][N];
+    private Viewer viewer = new Viewer();
+    private Logic logic = new Logic(viewer);
 
     @Override
     public void start(Stage primaryStage) {
         GridPane root = new GridPane();
 
-        Label labelTitle = new Label("Tic-Tac-Toe Game");
-
-        // Put on cell (0,0), span 2 column, 1 row.
-        root.add(labelTitle, 0, 0, 2, 1);
-
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < N; ++j) {
+                int ci = i;
+                int cj = j;
                 buttons[i][j] = new Button(".");
                 buttons[i][j].setOnAction(result -> {
-
+                    logic.pushedButton(ci, cj);
                 });
+                root.add(buttons[i][j], i, j);
             }
         }
 
+        var column1 = new ColumnConstraints();
+        column1.setPercentWidth(30);
+        var column2 = new ColumnConstraints();
+        column2.setPercentWidth(30);
+        var column3 = new ColumnConstraints();
+        column3.setPercentWidth(30);
+        var row1 = new RowConstraints();
+        row1.setPercentHeight(30);
+        var row2 = new RowConstraints();
+        row2.setPercentHeight(30);
+        var row3 = new RowConstraints();
+        row3.setPercentHeight(30);
+        //row1.setFillHeight(true);
+        root.getColumnConstraints().addAll(column1, column2);
+        root.getRowConstraints().addAll(row1, row2, row3);
 
         Scene scene = new Scene(root, 300, 300);
-        primaryStage.setTitle("GridPanel Layout Demo (o7planning.org)");
+        primaryStage.setTitle("Tic-Tac-Toe");
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -57,7 +72,14 @@ public class TicTacToe extends Application {
         }
 
         public void set(int x, int y, XO symbol) {
-
+            String text = ".";
+            switch (symbol) {
+                case X : text = "X" ;
+                break;
+                case O : text = "O";
+                break;
+            }
+            buttons[x][y].setText(text);
         }
     }
 }
