@@ -1,9 +1,11 @@
 package com.hse.java.xo;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-import java.awt.*;
 
 
 public class TicTacToe extends Application {
@@ -14,7 +16,11 @@ public class TicTacToe extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
+        var button = new Button("Click me");
+        button.setOnAction(value -> Platform.exit());
+        var scene = new Scene(button, 200, 100);
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
     }
 
