@@ -29,7 +29,7 @@ public class Logic {
         } else if (step == 9) {
             viewer.showResult(XO.EMPTY);
         } else {
-
+            changeTurn();
         }
     }
 
