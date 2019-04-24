@@ -1,7 +1,7 @@
 package com.hse.java.xo;
 
 public class Logic {
-    public Logic() {
+    public Logic(TicTacToe.Viewer viewer) {
 
     }
 

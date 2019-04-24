@@ -3,6 +3,8 @@ package com.hse.java.xo;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
 
 public class TicTacToe extends Application {
 
@@ -12,7 +14,6 @@ public class TicTacToe extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
 
 
     }
