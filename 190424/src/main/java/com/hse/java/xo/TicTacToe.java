@@ -25,6 +25,7 @@ public class TicTacToe extends Application {
     private Button[][] buttons = new Button[N][N];
     private Viewer viewer = new Viewer();
     private Logic logic = new Logic(viewer);
+    private Label label;
 
     @Override
     public void start(Stage primaryStage) {
@@ -34,10 +35,8 @@ public class TicTacToe extends Application {
             for (int j = 0; j < N; ++j) {
                 int ci = i;
                 int cj = j;
-                buttons[i][j] = new Button(".");
-                buttons[i][j].setOnAction(result -> {
-                    logic.pushedButton(ci, cj);
-                });
+                buttons[i][j] = new Button();
+                buttons[i][j].setOnAction(result -> logic.pushedButton(ci, cj));
                 root.add(buttons[i][j], i, j);
             }
         }
@@ -54,9 +53,15 @@ public class TicTacToe extends Application {
         row2.setPercentHeight(30);
         var row3 = new RowConstraints();
         row3.setPercentHeight(30);
-        //row1.setFillHeight(true);
         root.getColumnConstraints().addAll(column1, column2);
         root.getRowConstraints().addAll(row1, row2, row3);
+
+        label = new Label("");
+
+        root.add(label, 0, N, N / 2, 1);
+        var endGameButton = new Button("End game.");
+        endGameButton.setOnAction(result -> Platform.exit());
+        root.add(endGameButton, N / 2, N);
 
         Scene scene = new Scene(root, 300, 300);
         primaryStage.setTitle("Tic-Tac-Toe");
@@ -68,18 +73,23 @@ public class TicTacToe extends Application {
     public class Viewer {
 
         public void showResult(XO result) {
-
+            String text = "Draw";
+            switch (result) {
+                case X: text = "X wins!";
+                break;
+                case O: text = "O wins!";
+                break;
+            }
+            label.setText(text);
+            for (int i = 0; i < N; ++i) {
+                for (int j = 0; j < N; ++j) {
+                    buttons[i][j].setDisable(true);
+                }
+            }
         }
 
         public void set(int x, int y, XO symbol) {
-            String text = ".";
-            switch (symbol) {
-                case X : text = "X" ;
-                break;
-                case O : text = "O";
-                break;
-            }
-            buttons[x][y].setText(text);
+            buttons[x][y].setText(symbol.name());
         }
     }
 }
