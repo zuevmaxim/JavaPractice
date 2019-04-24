@@ -2,35 +2,33 @@ package com.hse.java.xo;
 
 public class Logic {
 
-    private TicTacToe.Viewer viewer;
     private XO[][] board = {{XO.EMPTY, XO.EMPTY, XO.EMPTY},
                             {XO.EMPTY, XO.EMPTY, XO.EMPTY},
                             {XO.EMPTY, XO.EMPTY, XO.EMPTY}};
     private XO turn = XO.X;
     private int step = 0;
 
-    public Logic(TicTacToe.Viewer viewer) {
-        this.viewer = viewer;
+    public XO getSymb(int x, int y) {
+        return board[x][y];
     }
 
-    public void pushedButton(int x, int y) {
+    public XO pushedButton(int x, int y) {
         if (x > 2 || x < 0 || y > 2 || y < 0) {
-            return;
+            return XO.GAME;
         } else if (board[x][y] != XO.EMPTY) {
-            return;
+            return XO.GAME;
         }
 
-        viewer.set(x, y, turn);
         board[x][y] = turn;
         step++;
-
         if (isVictory(x, y)) {
-            viewer.showResult(turn);
+            return turn;
         } else if (step == 9) {
-            viewer.showResult(XO.EMPTY);
-        } else {
-            changeTurn();
+            return XO.DRAW;
         }
+        changeTurn();
+
+        return XO.GAME;
     }
 
     private void changeTurn() {
