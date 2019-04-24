@@ -52,7 +52,11 @@ public class TicTacToe extends Application {
 
     public class Viewer {
 
-        public void showResult(Result result) {
+        public void showResult(XO result) {
+
+        }
+
+        public void set(int x, int y, XO symbol) {
 
         }
     }
