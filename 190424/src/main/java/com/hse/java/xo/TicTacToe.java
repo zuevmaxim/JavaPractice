@@ -2,14 +2,12 @@ package com.hse.java.xo;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.HPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
@@ -23,8 +21,7 @@ public class TicTacToe extends Application {
 
     private final int N = 3;
     private Button[][] buttons = new Button[N][N];
-    private Viewer viewer = new Viewer();
-    private Logic logic = new Logic(viewer);
+    private Logic logic = new Logic();
     private Label label;
 
     @Override
@@ -36,7 +33,17 @@ public class TicTacToe extends Application {
                 int ci = i;
                 int cj = j;
                 buttons[i][j] = new Button();
-                buttons[i][j].setOnAction(result -> logic.pushedButton(ci, cj));
+                buttons[i][j].setMaxWidth(Double.MAX_VALUE);
+                buttons[i][j].setMaxHeight(Double.MAX_VALUE);
+                GridPane.setHgrow(buttons[i][j], Priority.ALWAYS);
+                GridPane.setVgrow(buttons[i][j], Priority.ALWAYS);
+                buttons[i][j].setOnAction(result -> {
+                    XO currentResult = logic.pushedButton(ci, cj);
+                    if (currentResult != XO.GAME) {
+                        showResult(currentResult);
+                    }
+                    set(ci, cj, logic.getSymb(ci, cj));
+                });
                 root.add(buttons[i][j], i, j);
             }
         }
@@ -70,26 +77,23 @@ public class TicTacToe extends Application {
 
     }
 
-    public class Viewer {
+    private void set(int x, int y, XO symbol) {
+        buttons[x][y].setText(symbol.name());
+    }
 
-        public void showResult(XO result) {
-            String text = "Draw";
-            switch (result) {
-                case X: text = "X wins!";
+    private void showResult(XO result) {
+        String text = "Draw";
+        switch (result) {
+            case X: text = "X wins!";
                 break;
-                case O: text = "O wins!";
+            case O: text = "O wins!";
                 break;
-            }
-            label.setText(text);
-            for (int i = 0; i < N; ++i) {
-                for (int j = 0; j < N; ++j) {
-                    buttons[i][j].setDisable(true);
-                }
-            }
         }
-
-        public void set(int x, int y, XO symbol) {
-            buttons[x][y].setText(symbol.name());
+        label.setText(text);
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < N; ++j) {
+                buttons[i][j].setDisable(true);
+            }
         }
     }
 }
